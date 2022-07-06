@@ -12,12 +12,15 @@ namespace CurrectWeatherForecastApp
             var key = File.ReadAllText("appsettings.json");
             var apiKey = JObject.Parse(key).GetValue("DefaultKey").ToString();
 
-            var client = new HttpClient();
-            var weatherURL = $"https://api.openweathermap.org/data/2.5/weather?zip=35040,us&appid={apiKey}&units=imperial";
-            var weatherResult = client.GetStringAsync(weatherURL).Result;
-            var weatherDisplay = JObject.Parse(weatherResult)["main"].ToString();
+            Console.WriteLine("Please enter your zipcode.");
+            var zipCode = Console.ReadLine();
 
-            Console.WriteLine(weatherDisplay);
+            var apiCall = $"https://api.openweathermap.org/data/2.5/weather?zip={zipCode},us&appid={apiKey}&units=imperial";
+
+            Console.WriteLine();
+
+            Console.WriteLine($"It is currently {WeatherMap.GetTemp(apiCall)}°F in your location.");
+
         }
     }
 }
